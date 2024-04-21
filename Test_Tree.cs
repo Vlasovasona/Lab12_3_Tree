@@ -1,4 +1,4 @@
-using Лаба12_часть3_Дерево;
+using Р›Р°Р±Р°12_С‡Р°СЃС‚СЊ3_Р”РµСЂРµРІРѕ;
 using Library_10;
 
 namespace Tree_Tests
@@ -6,9 +6,9 @@ namespace Tree_Tests
     [TestClass]
     public class Test_Tree
     {
-        //блок ошибок
+        //Р±Р»РѕРє РѕС€РёР±РѕРє
         [TestMethod]
-        public void Print_EmptyTree_Exception() //метод проверки возникновения ошибки при попытке печати пустого дерева
+        public void Print_EmptyTree_Exception() //РјРµС‚РѕРґ РїСЂРѕРІРµСЂРєРё РІРѕР·РЅРёРєРЅРѕРІРµРЅРёСЏ РѕС€РёР±РєРё РїСЂРё РїРѕРїС‹С‚РєРµ РїРµС‡Р°С‚Рё РїСѓСЃС‚РѕРіРѕ РґРµСЂРµРІР°
         {
             MyTree<Instrument> tree = new MyTree<Instrument>();
             Assert.ThrowsException<Exception>(() =>
@@ -18,7 +18,7 @@ namespace Tree_Tests
         }
 
         [TestMethod]
-        public void Print_FindMinElement_InEmptyTree_Exception() //метод проверки возникновения ошибки при попытке найти минимальный элемент в пустой дереве
+        public void Print_FindMinElement_InEmptyTree_Exception() //РјРµС‚РѕРґ РїСЂРѕРІРµСЂРєРё РІРѕР·РЅРёРєРЅРѕРІРµРЅРёСЏ РѕС€РёР±РєРё РїСЂРё РїРѕРїС‹С‚РєРµ РЅР°Р№С‚Рё РјРёРЅРёРјР°Р»СЊРЅС‹Р№ СЌР»РµРјРµРЅС‚ РІ РїСѓСЃС‚РѕР№ РґРµСЂРµРІРµ
         {
             MyTree<Instrument> tree = new MyTree<Instrument>();
             Assert.ThrowsException<Exception>(() =>
@@ -26,26 +26,26 @@ namespace Tree_Tests
                 tree.FindMin();
             });
         }
-        //блок ошибок закончен
+        //Р±Р»РѕРє РѕС€РёР±РѕРє Р·Р°РєРѕРЅС‡РµРЅ
 
-        //проверка конструктора дерева
+        //РїСЂРѕРІРµСЂРєР° РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂР° РґРµСЂРµРІР°
         [TestMethod]
-        public void CreateTree_CheckCount_Test() //проверка работы Count
+        public void CreateTree_CheckCount_Test() //РїСЂРѕРІРµСЂРєР° СЂР°Р±РѕС‚С‹ Count
         {
             MyTree<Instrument> tree = new MyTree<Instrument>(5);
             Assert.AreEqual(5, tree.Count);
         }
 
-        //проверка класса Point_Tree
+        //РїСЂРѕРІРµСЂРєР° РєР»Р°СЃСЃР° Point_Tree
         [TestMethod]
-        public void CreatePointTree_CheckNull_Test() //проверка 
+        public void CreatePointTree_CheckNull_Test() //РїСЂРѕРІРµСЂРєР° РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂР° РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ РґР»СЏ СЃРѕР·РґР°РЅРёСЏ Point 
         {
             Point_Tree<Instrument> p = new Point_Tree<Instrument>();
             Assert.IsNull(p.Left);
         }
 
         [TestMethod]
-        public void Point_ToString_NotNull_Test()
+        public void Point_ToString_NotNull_Test() //РїСЂРѕРІРµСЂРєР° ToString РґР»СЏ РќР• РїРѕСЃС‚СѓРѕР№ СЃС‚СЂРѕРєРё
         {
             HandTool tool = new HandTool();
             Point_Tree<Library_10.Instrument> p = new Point_Tree<Library_10.Instrument>(tool);
@@ -53,7 +53,7 @@ namespace Tree_Tests
         }
 
         [TestMethod]
-        public void Point_ToString_Null_Test()
+        public void Point_ToString_Null_Test() //РїСЂРѕРІРµСЂРєР° РјРµС‚РѕРґР° ToString РґР»СЏ РїСѓСЃС‚РѕР№ СЃС‚СЂРѕРєРё
         {
             HandTool tool = new HandTool();
             tool = null;
@@ -62,7 +62,7 @@ namespace Tree_Tests
         }
 
         [TestMethod]
-        public void TestCompareTo()
+        public void TestCompareTo() //РїСЂРѕРІРµСЂРєР° РЅРѕРІРѕРіРѕ РєРѕРјРїР°СЂР°С‚РѕСЂР°  (РїРѕ id)
         {
             Instrument tool1 = new Instrument("E", 2);
             Instrument tool2 = new Instrument("Er", 22);
@@ -71,28 +71,26 @@ namespace Tree_Tests
             Point_Tree<Instrument> node1 = new Point_Tree<Instrument>(tool1);
             Point_Tree<Instrument> node2 = new Point_Tree<Instrument>(tool2);
 
-            int result1 = node1.CompareTo(node2); // Сравнение node1 с node2
-            int result2 = node2.CompareTo(node1); // Сравнение node2 с node1
-            int result3 = node1.CompareTo(node1); // Сравнение node1 с самим собой
+            int result1 = node1.CompareTo(node2); // РЎСЂР°РІРЅРµРЅРёРµ node1 СЃ node2
+            int result2 = node2.CompareTo(node1); // РЎСЂР°РІРЅРµРЅРёРµ node2 СЃ node1
+            int result3 = node1.CompareTo(node1); // РЎСЂР°РІРЅРµРЅРёРµ node1 СЃ СЃР°РјРёРј СЃРѕР±РѕР№
 
-            Assert.AreEqual(-1, result1); // node1 меньше node2, ожидаем -1
-            Assert.AreEqual(1, result2); // node2 больше node1, ожидаем 1
-            Assert.AreEqual(0, result3); // node1 равен node1, ожидаем 0
+            Assert.AreEqual(-1, result1); // node1 РјРµРЅСЊС€Рµ node2, РѕР¶РёРґР°РµРј -1
+            Assert.AreEqual(1, result2); // node2 Р±РѕР»СЊС€Рµ node1, РѕР¶РёРґР°РµРј 1
+            Assert.AreEqual(0, result3); // node1 СЂР°РІРµРЅ node1, РѕР¶РёРґР°РµРј 0
         }
 
-        //проеврка методов MyTree
+        //РїСЂРѕРµРІСЂРєР° РјРµС‚РѕРґРѕРІ MyTree
         [TestMethod]
         public void TestFindMinRecursive_WhenRootIsNull_ShouldThrowException()
         {
-            // Arrange
             MyTree<Instrument> tree = new MyTree<Instrument>();
 
-            // Act & Assert
-            Assert.ThrowsException<Exception>(() => tree.FindMin(), "Дерево пусто. Не существует минимального значения.");
+            Assert.ThrowsException<Exception>(() => tree.FindMin(), "Р”РµСЂРµРІРѕ РїСѓСЃС‚Рѕ. РќРµ СЃСѓС‰РµСЃС‚РІСѓРµС‚ РјРёРЅРёРјР°Р»СЊРЅРѕРіРѕ Р·РЅР°С‡РµРЅРёСЏ.");
         }
 
         [TestMethod]
-        public void TestFindMin_OneNodeTree()
+        public void TestFindMin_OneNodeTree() //РїСЂРѕРІРµСЂРєР° РЅР°С…РѕР¶РґРµРЅРёСЏ РјРёРЅРёРјР°Р»СЊРЅРѕРіРѕ СЌР»РµРјРµРЅС‚Р° РІ РґРµСЂРµРІРµ СЃ РѕРґРЅРёРј СѓР·Р»РѕРј
         {
             MyTree<Instrument> tree = new MyTree<Instrument>(1);
             Instrument tool1 = new Instrument();
@@ -102,7 +100,7 @@ namespace Tree_Tests
         }
 
         [TestMethod]
-        public void TestFindMin_FullTree()
+        public void TestFindMin_FullTree() //РЅР°С…РѕР¶РґРµРЅРёРµ РјРёРЅРёРјР°Р»СЊРЅРѕРіРѕ СЌР»РµРјРµРЅС‚Р° РІ Р·Р°РїРѕР»РЅРµРЅРЅРѕРј РґРµСЂРµРІРµ
         {
             MyTree<Instrument> tree = new MyTree<Instrument>(1);
             Instrument tool1 = new Instrument("E", 10);
@@ -122,7 +120,7 @@ namespace Tree_Tests
         }
 
         [TestMethod]
-        public void Test_TransformOneNodeTree()
+        public void Test_TransformOneNodeTree() //РїСЂРѕРІРµСЂРєР° С‚СЂР°РЅСЃС„РѕСЂРјРµСЂР° РґРµСЂРµРІР° СЃ РѕРґРЅРёРј СѓР·Р»РѕРј
         {
             MyTree<Instrument> tree = new MyTree<Instrument>(1);
             Instrument tool1 = new Instrument();
@@ -135,7 +133,7 @@ namespace Tree_Tests
         }
 
         [TestMethod]
-        public void Test_TransformFullNodeTree()
+        public void Test_TransformFullNodeTree() //РјРµС‚Рѕ РґР»СЏ РїСЂРѕРІРµСЂРєРё С‚СЂР°РЅСЃС„РѕСЂРјРµСЂР° РґРµСЂРµРІР° РїРѕРёСЃРєР°
         {
             MyTree<Instrument> tree = new MyTree<Instrument>(1);
             Instrument tool1 = new Instrument("E", 182);
@@ -156,9 +154,9 @@ namespace Tree_Tests
             Assert.AreEqual(tool1, toolRoot);
         }
 
-        //тестирование методов удаления
+        //С‚РµСЃС‚РёСЂРѕРІР°РЅРёРµ РјРµС‚РѕРґРѕРІ СѓРґР°Р»РµРЅРёСЏ
         [TestMethod]
-        public void Test_DeleteFullNodeTree()
+        public void Test_DeleteFullNodeTree() //РјРµС‚РѕРґ РґР»СЏ РїСЂРѕРІРµСЂРєРё СѓРґР°Р»РµРЅРёСЏ
         {
             MyTree<Instrument> tree = new MyTree<Instrument>(1);
             MyTree<Instrument> treeNew = new MyTree<Instrument>(1);
