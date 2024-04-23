@@ -38,14 +38,14 @@ namespace Tree_Tests
 
         //проверка класса Point_Tree
         [TestMethod]
-        public void CreatePointTree_CheckNull_Test() //проверка конструктора по умолчанию для создания Point 
+        public void CreatePointTree_CheckNull_Test() //проверка 
         {
             Point_Tree<Instrument> p = new Point_Tree<Instrument>();
             Assert.IsNull(p.Left);
         }
 
         [TestMethod]
-        public void Point_ToString_NotNull_Test() //проверка ToString для НЕ постуой строки
+        public void Point_ToString_NotNull_Test()
         {
             HandTool tool = new HandTool();
             Point_Tree<Library_10.Instrument> p = new Point_Tree<Library_10.Instrument>(tool);
@@ -53,7 +53,7 @@ namespace Tree_Tests
         }
 
         [TestMethod]
-        public void Point_ToString_Null_Test() //проверка метода ToString для пустой строки
+        public void Point_ToString_Null_Test()
         {
             HandTool tool = new HandTool();
             tool = null;
@@ -62,7 +62,7 @@ namespace Tree_Tests
         }
 
         [TestMethod]
-        public void TestCompareTo() //проверка нового компаратора  (по id)
+        public void TestCompareTo()
         {
             Instrument tool1 = new Instrument("E", 2);
             Instrument tool2 = new Instrument("Er", 22);
@@ -84,13 +84,15 @@ namespace Tree_Tests
         [TestMethod]
         public void TestFindMinRecursive_WhenRootIsNull_ShouldThrowException()
         {
+            // Arrange
             MyTree<Instrument> tree = new MyTree<Instrument>();
 
+            // Act & Assert
             Assert.ThrowsException<Exception>(() => tree.FindMin(), "Дерево пусто. Не существует минимального значения.");
         }
 
         [TestMethod]
-        public void TestFindMin_OneNodeTree() //проверка нахождения минимального элемента в дереве с одним узлом
+        public void TestFindMin_OneNodeTree()
         {
             MyTree<Instrument> tree = new MyTree<Instrument>(1);
             Instrument tool1 = new Instrument();
@@ -100,7 +102,7 @@ namespace Tree_Tests
         }
 
         [TestMethod]
-        public void TestFindMin_FullTree() //нахождение минимального элемента в заполненном дереве
+        public void TestFindMin_FullTree()
         {
             MyTree<Instrument> tree = new MyTree<Instrument>(1);
             Instrument tool1 = new Instrument("E", 10);
@@ -120,7 +122,7 @@ namespace Tree_Tests
         }
 
         [TestMethod]
-        public void Test_TransformOneNodeTree() //проверка трансформера дерева с одним узлом
+        public void Test_TransformOneNodeTree()
         {
             MyTree<Instrument> tree = new MyTree<Instrument>(1);
             Instrument tool1 = new Instrument();
@@ -133,7 +135,7 @@ namespace Tree_Tests
         }
 
         [TestMethod]
-        public void Test_TransformFullNodeTree() //мето для проверки трансформера дерева поиска
+        public void Test_TransformFullNodeTree()
         {
             MyTree<Instrument> tree = new MyTree<Instrument>(1);
             Instrument tool1 = new Instrument("E", 182);
@@ -147,38 +149,105 @@ namespace Tree_Tests
             tree.AddPoint(tool4);
             tree.AddPoint(tool5);
 
-            Instrument toolRoot = new Instrument();
             tree.TransformToSearchTree();
             tree.BalanceSearchTree();
-            toolRoot = tree.GetRoot();
+            Instrument toolRoot = tree.GetRoot();
             Assert.AreEqual(tool1, toolRoot);
         }
 
         //тестирование методов удаления
         [TestMethod]
-        public void Test_DeleteFullNodeTree() //метод для проверки удаления
+        public void Test_DeleteFullNodeTree()
         {
             MyTree<Instrument> tree = new MyTree<Instrument>(1);
             MyTree<Instrument> treeNew = new MyTree<Instrument>(1);
+            Instrument toolFromTree1 = tree.GetRoot();
+            Instrument toolFromTreeNew = treeNew.GetRoot();
+            
 
             Instrument tool1 = new Instrument("E", 177);
             Instrument tool2 = new Instrument("Er", 152);
             Instrument tool3 = new Instrument("E", 124);
             Instrument tool4 = new Instrument("Er", 108);
-            Instrument tool5 = new Instrument("E", 103);
             tree.AddPoint(tool1);
             tree.AddPoint(tool2);
             tree.AddPoint(tool3);
             tree.AddPoint(tool4);
-            tree.AddPoint(tool5);
+            tree.RemoveElement(toolFromTree1);
 
-            Instrument toolRoot = new Instrument();
             treeNew = tree.TransformToSearchTree();
             treeNew.BalanceSearchTree();
             treeNew.RemoveElement(tool3);
+            treeNew.RemoveElement(toolFromTreeNew);
             treeNew.BalanceSearchTree();
-            toolRoot = treeNew.GetRoot();
-            Assert.AreEqual(tool4, toolRoot);
+            Instrument toolRoot = treeNew.GetRoot();
+            Assert.AreEqual(tool2, toolRoot);
+        }
+
+        [TestMethod]
+        public void Test_DeleteFullNodeTree_ExtremeObjectRight()
+        {
+            MyTree<Instrument> tree = new MyTree<Instrument>(1);
+            MyTree<Instrument> treeNew = new MyTree<Instrument>(1);
+            Instrument toolFromTree1 = tree.GetRoot();
+            Instrument toolFromTreeNew = treeNew.GetRoot();
+
+
+            Instrument tool1 = new Instrument("E", 177);
+            Instrument tool2 = new Instrument("Er", 152);
+            Instrument tool3 = new Instrument("E", 124);
+            Instrument tool4 = new Instrument("Er", 108);
+            tree.AddPoint(tool1);
+            tree.AddPoint(tool2);
+            tree.AddPoint(tool3);
+            tree.AddPoint(tool4);
+            tree.RemoveElement(toolFromTree1);
+
+            treeNew = tree.TransformToSearchTree();
+            treeNew.BalanceSearchTree();
+            treeNew.RemoveElement(tool4);
+            treeNew.RemoveElement(toolFromTreeNew);
+            treeNew.BalanceSearchTree();
+            Instrument toolRoot = treeNew.GetRoot();
+            Assert.AreEqual(tool2, toolRoot);
+        }
+
+        [TestMethod]
+        public void Test_DeleteFullNodeTree_ExtremeObjectLeft()
+        {
+            MyTree<Instrument> tree = new MyTree<Instrument>(1);
+            Instrument toolFromTree1 = tree.GetRoot();
+
+
+            Instrument tool1 = new Instrument("E", 177);
+            Instrument tool2 = new Instrument("Er", 152);
+            tree.AddPoint(tool1);
+            tree.AddPoint(tool2);
+            tree.RemoveElement(toolFromTree1);
+            tree.RemoveElement(tool1);
+
+            Instrument toolRoot = tree.GetRoot();
+            Assert.AreEqual(tool2, toolRoot);
+        }
+
+        [TestMethod]
+        public void TestFindMaxValue()
+        {
+            // Создаем экземпляр дерева и добавляем в него элементы
+            MyTree<Instrument> tree = new MyTree<Instrument>(1);
+            Instrument tool1 = new Instrument("E", 177);
+            Instrument t = tree.GetRoot();
+
+            tree.AddPoint(tool1);
+
+            tree.RemoveElement(t);
+            Instrument toolRoot = tree.GetRoot();
+            Point_Tree<Instrument> root = new Point_Tree<Instrument>(toolRoot);
+            // Находим максимальное значение в дереве
+            Point_Tree<Instrument> maxNode = tree.FindMaxValue(root);
+
+            // Проверяем, что максимальное значение соответствует ожидаемому
+            Assert.AreEqual(tool1, maxNode.Data);
         }
     }
 }
