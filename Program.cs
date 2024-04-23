@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Diagnostics.Metrics;
 using Library_10;
 using System.Collections.Generic;
@@ -167,13 +167,29 @@ namespace Лаба12_часть2
                                 try
                                 {
                                     searchTree.RemoveElement(tool);
-                                    searchTree = searchTree.TransformToSearchTree();
-                                    searchTree.BalanceSearchTree();
+                                    
                                 }
                                 catch (Exception e)
                                 {
                                     Console.WriteLine($"Выполнение провалено: {e.Message}");
                                     break;
+                                }
+                                if (searchTree.Count == 0)
+                                {
+                                    Console.WriteLine("После удаления было получено пустое дерево");
+                                    break;
+                                }
+                                else
+                                {
+                                    try
+                                    {
+                                        searchTree = searchTree.TransformToSearchTree();
+                                        searchTree.BalanceSearchTree();
+                                    }
+                                    catch (Exception e)
+                                    {
+                                        Console.WriteLine($"Выполнение провалено: {e.Message}");
+                                    }
                                 }
                                 if (count > searchTree.Count)
                                 {
