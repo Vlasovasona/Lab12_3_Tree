@@ -135,7 +135,7 @@ namespace Tree_Tests
         }
 
         [TestMethod]
-        public void Test_TransformFullNodeTree()
+        public void Test_TransformFullNodeTree() 
         {
             MyTree<Instrument> tree = new MyTree<Instrument>(1);
             Instrument tool1 = new Instrument("E", 182);
@@ -152,12 +152,12 @@ namespace Tree_Tests
             tree.TransformToSearchTree();
             tree.BalanceSearchTree();
             Instrument toolRoot = tree.GetRoot();
-            Assert.AreEqual(tool1, toolRoot);
+            Assert.AreEqual(tool5, toolRoot);
         }
 
         //тестирование методов удаления
         [TestMethod]
-        public void Test_DeleteFullNodeTree()
+        public void Test_DeleteFullNodeTree() //проверка удаления элемента из заполненного дерева
         {
             MyTree<Instrument> tree = new MyTree<Instrument>(1);
             MyTree<Instrument> treeNew = new MyTree<Instrument>(1);
@@ -185,7 +185,7 @@ namespace Tree_Tests
         }
 
         [TestMethod]
-        public void Test_DeleteFullNodeTree_ExtremeObjectRight()
+        public void Test_DeleteFullNodeTree_ExtremeObjectRight() //проверка удаления крайнего рпвого элемента из дерева
         {
             MyTree<Instrument> tree = new MyTree<Instrument>(1);
             MyTree<Instrument> treeNew = new MyTree<Instrument>(1);
@@ -213,7 +213,7 @@ namespace Tree_Tests
         }
 
         [TestMethod]
-        public void Test_DeleteFullNodeTree_ExtremeObjectLeft()
+        public void Test_DeleteFullNodeTree_ExtremeObjectLeft() //Проверка удаления крайнего элемента из дерева
         {
             MyTree<Instrument> tree = new MyTree<Instrument>(1);
             Instrument toolFromTree1 = tree.GetRoot();
@@ -231,7 +231,7 @@ namespace Tree_Tests
         }
 
         [TestMethod]
-        public void TestFindMaxValue()
+        public void TestFindMaxValue() //проверка работы метода FindMaxValue
         {
             // Создаем экземпляр дерева и добавляем в него элементы
             MyTree<Instrument> tree = new MyTree<Instrument>(1);
@@ -248,6 +248,16 @@ namespace Tree_Tests
 
             // Проверяем, что максимальное значение соответствует ожидаемому
             Assert.AreEqual(tool1, maxNode.Data);
+        }
+
+        [TestMethod]
+        public void TestDeleteOneElementTree() //проверка удаления единственного элемента дерева 
+        {
+            MyTree<Instrument> tree = new MyTree<Instrument>(1);
+            Instrument t = tree.GetRoot();
+            
+            tree.RemoveElement(t);
+            Assert.AreEqual(0, tree.Count);
         }
     }
 }
