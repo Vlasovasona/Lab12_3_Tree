@@ -104,7 +104,7 @@ namespace Лаба12_часть3_Дерево
                     isExist = true; //меняем флажок на true
                 else //иначе начинаем искать место
                 {
-                    if (node.Data.CompareTo(data) < 0) //если Data меньше чем то, что находится в Point
+                    if (node.Data.CompareTo(data) > 0) //если Data меньше чем то, что находится в Point
                         node = node.Left; //смещаемся на девую ветку
                     else node = node.Right; //иначе смещаемся на правую ветку
                 }
@@ -115,7 +115,7 @@ namespace Лаба12_часть3_Дерево
                 return;
             }
             Point_Tree<T> newPoint = new Point_Tree<T>(data);
-            if (current.Data.CompareTo(data) < 0)
+            if (current.Data.CompareTo(data) > 0)
                 current.Left = newPoint;
             else
                 current.Right = newPoint;
@@ -226,12 +226,12 @@ namespace Лаба12_часть3_Дерево
             // Сравниваем ключ узла с заданным ключом
             if (node.Data.CompareTo(key) > 0)
             {
-                // Рекурсивно идем влево, если ключ больше
+                // Рекурсивно идем влево, если ключ меньше
                 node.Left = RemoveElementRecursive(node.Left, key);
             }
             else if (node.Data.CompareTo(key) < 0)
             {
-                // Рекурсивно идем вправо, если ключ меньше
+                // Рекурсивно идем вправо, если ключ больше
                 node.Right = RemoveElementRecursive(node.Right, key);
             }
             else
