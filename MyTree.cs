@@ -21,7 +21,7 @@ namespace Лаба12_часть3_Дерево
 
         public MyTree() { }
 
-        public MyTree(int length)
+        public MyTree(int length) //конструктор с параметром длины
         {
             count = length;
             root = MakeTree(length, root);
@@ -29,16 +29,16 @@ namespace Лаба12_часть3_Дерево
 
         public void ShowTree()
         {
-            Print(root);
+            Print(root); //вызов рекурсивной функции для печати дерева
         }
 
         //ИСД
         Point_Tree<T>? MakeTree(int length, Point_Tree<T>? point) //метод для создания идеально сбалансированного бинарного дерева
         {
+            if (length == 0) return null;
             T data = new T();
             data.RandomInit();
             Point_Tree<T> newItem = new Point_Tree<T>(data); //создаем новый элемент
-            if (length == 0) return null;
             int nl = length / 2; //распределяем по левому и правому деревьям 
             int nr = length - nl - 1;
             newItem.Left = MakeTree(nl, newItem.Left); //рекурсивно заполняем дерево
@@ -64,7 +64,7 @@ namespace Лаба12_часть3_Дерево
         //методы для нахождения элемента с минимальным значением id в идеально сбалансированном дереве 
         public T FindMin()
         {
-            if (root == null)
+            if (root == null || count == 0)
             {
                 throw new Exception("Дерево пусто. Не существует минимального значения.");
             }
@@ -73,7 +73,7 @@ namespace Лаба12_часть3_Дерево
             return min; // Возвращаем найденный минимальный элемент
         }
 
-        private void FindMinRecursive(Point_Tree<T>? node, ref T min)
+        private void FindMinRecursive(Point_Tree<T>? node, ref T min) //рекурсивный метод для нахождения минимального элемента ИСД
         {
             if (node == null)
             {
@@ -91,7 +91,7 @@ namespace Лаба12_часть3_Дерево
         //методы для нахождения элемента с минимальным значением id в ИСД конец
 
         //методы для дерева поиска
-        public void AddPoint(T oldData)
+        public void AddPoint(T oldData) //добавление элемента в дерево поиска
         {
             T data = (T)oldData.Clone();
             Point_Tree<T>? node = root;
@@ -128,7 +128,7 @@ namespace Лаба12_часть3_Дерево
             // Создаем список элементов для сохранения отсортированных данных дерева
             List<T> elements = new List<T>();
 
-            // Выполняем обход дерева в порядке возрастания (In-order traversal) и добавляем данные в список
+            // Выполняем обход дерева в порядке возрастания и добавляем данные в список
             InOrderTraversal(root, elements);
 
             // Перестраиваем дерево, чтобы достигнуть баланса, на основе отсортированного списка элементов
@@ -177,7 +177,7 @@ namespace Лаба12_часть3_Дерево
         }
         //методы для балансировки закончились
 
-        void TransformToArray(Point_Tree<T> node, T[] array, ref int current)
+        void TransformToArray(Point_Tree<T> node, T[] array, ref int current) //метод для создания массива со значениями из ИСД
         {
             if (node != null)
             {
@@ -188,7 +188,7 @@ namespace Лаба12_часть3_Дерево
             }
         }
 
-        public MyTree<T> TransformToSearchTree()
+        public MyTree<T> TransformToSearchTree() //трансфоормация ИСД в дерево поиска
         {
             if (count == 0 || root == null) throw new Exception("empty tree");
             else
@@ -210,13 +210,13 @@ namespace Лаба12_часть3_Дерево
             }            
         }
 
-        public void RemoveElement(T key)
+        public void RemoveElement(T key) //вызов рекурсивной функции для удаления элемента из дерева поиска
         {
             // Вызов рекурсивного метода удаления элемента
             root = RemoveElementRecursive(root, key);
         }
 
-        private Point_Tree<T>? RemoveElementRecursive(Point_Tree<T>? node, T key)
+        private Point_Tree<T>? RemoveElementRecursive(Point_Tree<T>? node, T key) //рекурсивная функция для удаления элемента из дерева поиска
         {
             if (node == null)
             {
@@ -236,23 +236,23 @@ namespace Лаба12_часть3_Дерево
             }
             else
             {
-                // Узел с заданным ключом найден, рассматриваем 4 случая
-                if (node.Left == null && root.Right == null)
+                // Узел с заданным ключом найден, рассматриваем 3 случая
+                if (node.Left == null && root.Right == null) //У ЭЛЕМЕНТА НЕТ ДОЧЕРНИХ УЗЛОВ
                 {
-                    node = null;
-                    count--;
+                    node = null; //просто удаляем узел
+                    count--; //обновляем счетчик
                 }
-                else if (node.Right != null && node.Left != null)
+                else if (node.Right != null && node.Left != null) //у узла есть оба дочерних элемента
                 {
-                    Point_Tree<T> maxNode = FindMaxValue(node.Left);
-                    node.Data = maxNode.Data;
-                    node.Left = RemoveElementRecursive(node.Left, maxNode.Data);
+                    Point_Tree<T> maxNode = FindMaxValue(node.Left); //находим максимальный элемент в левом поддереве
+                    node.Data = maxNode.Data; //ставим его вместо удаляемого
+                    node.Left = RemoveElementRecursive(node.Left, maxNode.Data); //удаляем найденный максимальный элемент в правом поддереве
                 }
                 else 
                 {
-                    Point_Tree<T> child = new Point_Tree<T>();
-                    if (node.Left != null) child = node.Left;
-                    else child = node.Right;
+                    Point_Tree<T> child = new Point_Tree<T>(); //если есть один из дочерних узлов
+                    if (node.Left != null) child = node.Left; 
+                    else child = node.Right;                  //заменяем его единственным дочерним узлом
                     node = child;
                     count--;
                 }
@@ -260,23 +260,19 @@ namespace Лаба12_часть3_Дерево
             return node;
         }
 
-        public Point_Tree<T> FindMaxValue(Point_Tree<T> node)
+        public Point_Tree<T>? FindMaxValue(Point_Tree<T>? node) //метод для нахождения максимального элемента в поддереве (нужен для удаления элемента из дерева поиска)
         {
             if (node == null)
             {
                 return null;
             }
-            Point_Tree<T> maxNode = node;
-            Point_Tree<T> leftMaxValue = FindMaxValue(maxNode.Left);
-            Point_Tree<T> rightMaxValue = FindMaxValue(maxNode.Right);
+            Point_Tree<T>? maxNode = node;
+            Point_Tree<T>? leftMaxValue = FindMaxValue(node.Left);
+            Point_Tree<T>? rightMaxValue = FindMaxValue(node.Right);
             if (leftMaxValue!=null && leftMaxValue.Data.CompareTo(maxNode.Data) > 0)
-            {
                 maxNode = leftMaxValue;
-            }
             if (rightMaxValue != null && rightMaxValue.Data.CompareTo(maxNode.Data) > 0)
-            {
                 maxNode = rightMaxValue;
-            }
             return maxNode;
         }
 
