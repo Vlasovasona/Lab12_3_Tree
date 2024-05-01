@@ -63,8 +63,9 @@ namespace Лаба12_часть2
                             try
                             {
                                 sbyte size = InputSbyteNumber("Введите размер списка");
-                                if (size == 0) throw new Exception("дерево не может быть нулевой длины");
+                                if (size <= 0) throw new Exception("дерево не может быть нулевой или отрицательной длины");
                                 tree = new MyTree<MeasuringTool>(size);
+                                searchTree = new MyTree<MeasuringTool>();
                                 Console.WriteLine("Дерево сформировано");
                             }
                             catch (Exception e)
@@ -97,61 +98,64 @@ namespace Лаба12_часть2
                         }
                     case 3: //минимальный элемент дерева
                         {
-                            if (tree.Count == 0 || tree == null) Console.WriteLine("ИС дерево пустое, операция невозможна");
-                            else
+                            MeasuringTool foundTool = new MeasuringTool(); //создаем объект, в который запишем найденный элемент
+                            try
                             {
-                                MeasuringTool foundTool = new MeasuringTool(); //создаем объект, в который запишем найденный элемент
-                                try
-                                {
-                                    foundTool = tree.FindMin(); //нашли минимальный элемент в ИСД
-                                    foundTool.Show(); //вывели на экран
-                                    Console.WriteLine("Операция прошла успешно");
-                                }
-                                catch (Exception e)
-                                {
-                                    Console.WriteLine($"Выполнение провалено: {e.Message}");
-                                }
+                                foundTool = tree.FindMin(); //нашли минимальный элемент в ИСД
+                                foundTool.Show(); //вывели на экран
+                                Console.WriteLine("Операция прошла успешно");
+                            }
+                            catch (Exception e)
+                            {
+                                Console.WriteLine($"Выполнение провалено: {e.Message}");
                             }
                             break;
                         }
                     case 4: //преобразовать ИСД в дерево поиска
                         {
-                            if (tree.Count == 0 || tree == null) Console.WriteLine("Идеально сбалансированное дерево пустое, операция невозможна");
-                            else
+                            try
                             {
-                                // Выводим исходное идеально сбалансированное дерево
-                                Console.WriteLine("Исходное идеально сбалансированное дерево:");
-                                try
+                                if (tree.Count == 0 || tree == null) Console.WriteLine("Идеально сбалансированное дерево пустое, операция невозможна");
+                                else
                                 {
-                                    tree.ShowTree();
+                                    // Выводим исходное идеально сбалансированное дерево
+                                    Console.WriteLine("Исходное идеально сбалансированное дерево:");
+                                    try
+                                    {
+                                        tree.ShowTree();
+                                    }
+                                    catch (Exception e)
+                                    {
+                                        Console.WriteLine($"Выполнение провалено: {e.Message}");
+                                    }
+                                    // Преобразуем идеально сбалансированное дерево в дерево поиска
+                                    try
+                                    {
+                                        searchTree = tree.TransformToSearchTree();
+                                    }
+                                    catch (Exception e)
+                                    {
+                                        Console.WriteLine($"Выполнение провалено: {e.Message}");
+                                    }
+                                    // Выводим преобразованное дерево поиска
+                                    Console.WriteLine("Преобразованное дерево поиска:");
+                                    try
+                                    {
+                                        Console.WriteLine("Дерево до балансировки:");
+                                        searchTree.ShowTree();
+                                        Console.WriteLine("Дерево после балансировки:");
+                                        searchTree.BalanceSearchTree();
+                                        searchTree.ShowTree();
+                                    }
+                                    catch (Exception e)
+                                    {
+                                        Console.WriteLine($"Выполнение провалено: {e.Message}");
+                                    }
                                 }
-                                catch (Exception e)
-                                {
-                                    Console.WriteLine($"Выполнение провалено: {e.Message}");
-                                }
-                                // Преобразуем идеально сбалансированное дерево в дерево поиска
-                                try
-                                {
-                                    searchTree = tree.TransformToSearchTree();
-                                }
-                                catch (Exception e)
-                                {
-                                    Console.WriteLine($"Выполнение провалено: {e.Message}");
-                                }
-                                // Выводим преобразованное дерево поиска
-                                Console.WriteLine("Преобразованное дерево поиска:");
-                                try
-                                {
-                                    Console.WriteLine("Дерево до балансировки:");
-                                    searchTree.ShowTree();
-                                    Console.WriteLine("Дерево после балансировки:");
-                                    searchTree.BalanceSearchTree();
-                                    searchTree.ShowTree();
-                                }
-                                catch (Exception e)
-                                {
-                                    Console.WriteLine($"Выполнение провалено: {e.Message}");
-                                }
+                            }
+                            catch (Exception e)
+                            {
+                                Console.WriteLine($"Выполнение провалено: {e.Message}");
                             }
                             break;
                         }
@@ -181,7 +185,7 @@ namespace Лаба12_часть2
                                 }
                                 else
                                 {
-                                    try
+                                    try 
                                     {
                                         searchTree = searchTree.TransformToSearchTree();
                                         searchTree.BalanceSearchTree();
@@ -191,7 +195,7 @@ namespace Лаба12_часть2
                                         Console.WriteLine($"Выполнение провалено: {e.Message}");
                                     }
                                 }
-                                if (count > searchTree.Count)
+                                if (count > searchTree.Count) 
                                 {
                                     Console.WriteLine("удаление прошло успешно. Вывожу новое дерево:");
                                     try
@@ -203,7 +207,7 @@ namespace Лаба12_часть2
                                         Console.WriteLine($"Выполнение провалено: {e.Message}");
                                     }
                                 }
-                                else 
+                                else
                                 {
                                     Console.WriteLine("Выполнение провалено: не найден элемент для удаления.");
                                 }
@@ -212,7 +216,9 @@ namespace Лаба12_часть2
                         }
                     case 6: //удалить ИСД из памяти
                         {
+
                             Clear(ref tree);
+                            //tree = new MyTree<MeasuringTool>();
                             break;
                         }
                     case 7: //выход из программы
